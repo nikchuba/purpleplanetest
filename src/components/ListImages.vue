@@ -1,51 +1,56 @@
 <template>
   <div class="list-images">
-    <div class="card" v-for="item in listImages" :key="item.id">
-      <img class="card-image" :src="item.url" :alt="`picture: ${item.id}`">
+    <div
+      v-for="item in listImages"
+      :key="item.id"
+      class="card"
+    >
+      <img
+        class="card-image"
+        :src="item.url"
+        :alt="`picture: ${item.id}`"
+        width="300"
+        height="300"
+      >
       <div class="card-body">
-        <span class="card-title">{{item.title}}</span>
+        <span class="card-title">{{ item.title }}</span>
       </div>
     </div>
-
-    <InfiniteLoading @infinite="infiniteHandler"></InfiniteLoading>
+    <!-- <InfiniteLoading class="infiniteLoading" @infinite="infiniteHandler"></InfiniteLoading> -->
+    <Observer @intersect="intersected" />
   </div>
 </template>
 
 <script>
-import InfiniteLoading from 'vue-infinite-loading'
+// import InfiniteLoading from 'vue-infinite-loading'
+import Observer from './Observer.vue'
 export default {
   components: {
-    InfiniteLoading
+    Observer
   },
+  // components: {
+  //   InfiniteLoading
+  // },
   data () {
     return {
+      page: 1,
       listImages: []
     }
   },
   mounted () {
-    this.fetchPhoto()
+    this.$nextTick(() => {
+      this.getPhotos()
+    })
   },
   methods: {
-    async fetchPhotos () {
-      const response = await fetch('https://jsonplaceholder.typicode.com/photos?_limit=3')
+    async getPhotos () {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.page}&_limit=6`)
       const listImages = await response.json()
-      this.listImages.push(...listImages)
+      this.listImages = [...this.listImages, ...listImages]
     },
-    async fetchPhoto (id) {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/photos?id=${id}`)
-      const image = await response.json()
-      this.listImages.push(...image)
-      return image.length
-    },
-    async infiniteHandler ($state) {
-      const id = this.listImages.length + 1
-      const count = await this.fetchPhoto(id)
-
-      if (count > 0) {
-        return $state.loaded()
-      }
-
-      return $state.complete()
+    intersected () {
+      this.page++
+      this.getPhotos()
     }
   }
 }
@@ -58,12 +63,12 @@ export default {
   flex-wrap: wrap;
   justify-content: space-evenly;
   height: auto;
-  max-width: 600px;
+  max-width: 650px;
   min-width: 320px;
 }
 .card{
-  width: 600px;
-  height: 600px;
+  width: 300px;
+  height: 300px;
   margin-bottom: 20px;
   position: relative;
 }
@@ -75,16 +80,14 @@ export default {
   bottom: 0;
   left: 0;
   text-align: center;
-  height: 100px;
-  width: inherit;
+  height: 60px;
+  width: 280px;
   border-radius: 0 0 20px 20px;
   background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
-  text-overflow: ellipsis;
+  padding: 10px;
 }
 .card-title{
   font-size: 20px;
-  height: inherit;
-  width: inherit;
 }
 </style>

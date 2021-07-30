@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <list-images></list-images>
+    <list-images />
   </div>
 </template>
 
@@ -21,10 +21,30 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 750px;
   text-align: center;
-  width: 800px;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.7);
   padding: 10px 0 10px 0;
+  min-height: 100vh;
 }
 
+@media (max-width: 1200px) {
+  #app{
+    max-width: 800px;
+  }
+}
+
+@media (max-width: 769px) {
+  #app{
+    max-width: 500px;
+    margin: 0 20px;
+  }
+}
+
+@media (max-width: 430px) {
+  #app{
+    max-width: none;
+    margin: 0;
+  }
+}
 </style>
