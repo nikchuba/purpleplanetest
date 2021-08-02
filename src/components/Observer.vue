@@ -14,17 +14,21 @@ export default {
     observer: null
   }),
   mounted () {
-    const options = this.options || {}
-    this.observer = new IntersectionObserver(([entry]) => {
-      if (entry && entry.isIntersecting) {
-        this.$emit('intersect')
-      }
-    }, options)
-
+    this.createIntersectionObserver()
     this.observer.observe(this.$el)
   },
   destroyed () {
     this.observer.disconnect()
+  },
+  methods: {
+    createIntersectionObserver () {
+      const options = this.options || {}
+      this.observer = new IntersectionObserver(([entry]) => {
+        if (entry && entry.isIntersecting) {
+          this.$emit('intersect')
+        }
+      }, options)
+    }
   }
 }
 </script>

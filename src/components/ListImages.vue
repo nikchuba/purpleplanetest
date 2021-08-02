@@ -16,21 +16,16 @@
         <span class="card-title">{{ item.title }}</span>
       </div>
     </div>
-    <!-- <InfiniteLoading class="infiniteLoading" @infinite="infiniteHandler"></InfiniteLoading> -->
     <Observer @intersect="intersected" />
   </div>
 </template>
 
 <script>
-// import InfiniteLoading from 'vue-infinite-loading'
 import Observer from './Observer.vue'
 export default {
   components: {
     Observer
   },
-  // components: {
-  //   InfiniteLoading
-  // },
   data () {
     return {
       page: 1,
@@ -58,18 +53,20 @@ export default {
 
 <style lang="css" scoped>
   .list-images{
-  margin: 20px 0 0 0;
+  margin: 20px auto 0 auto;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: space-between;
   height: auto;
-  max-width: 650px;
+  max-width: 620px;
   min-width: 320px;
 }
 .card{
   width: 300px;
   height: 300px;
   margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
   position: relative;
 }
 .card-image{
@@ -89,5 +86,11 @@ export default {
 }
 .card-title{
   font-size: 20px;
+}
+@media (max-width: 670px) {
+  .card{
+  margin-left: 0;
+  margin-right: 0;
+}
 }
 </style>
