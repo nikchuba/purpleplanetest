@@ -1,8 +1,20 @@
 <template>
   <div class="wrap">
     <form class="form-add-post" @submit.prevent="sendRequest" @keyup.enter="sendRequest">
-      <input v-model.trim="title" class="form-title" type="text" aria-label="title" placeholder="Введите Title">
-      <textarea v-model.trim="body" class="form-body" id="" cols="40" rows="3" placeholder="Введите Body"></textarea>
+      <input
+        v-model.trim="title"
+        class="form-title"
+        type="text"
+        aria-label="title"
+        placeholder="Введите Title"
+      />
+      <textarea
+        v-model.trim="body"
+        class="form-body"
+        cols="40"
+        rows="3"
+        placeholder="Введите Body"
+      ></textarea>
       <button class="form-btn" type="submit">
       Отправить
       </button>
@@ -11,6 +23,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -19,22 +32,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['sendPost']),
     async sendRequest () {
-      if (this.isValid) {
-        const options = {
-          method: 'POST',
-          body: JSON.stringify({
-            title: this.title,
-            body: this.body,
-            userId: 1
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8'
-          }
+      const options = {
+        method: 'POST',
+        body: JSON.stringify({
+          title: this.title,
+          body: this.body,
+          userId: 1
+        }),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
         }
-        const response = await fetch('https://jsonplaceholder.typicode.com/posts', options)
-        const json = await response.json()
-        this.$emit('getData', await json)
+      }
+      if (this.isValid) {
+        this.sendPost(options)
         this.clearInputs()
       }
     },

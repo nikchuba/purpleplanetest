@@ -1,29 +1,18 @@
 <template>
-  <div class="pop-up">
+  <div class="pop-up" v-if="isVisiblePopUp">
     <ul>
-      <li>User ID: {{data.userId}}</li>
-      <li>Post ID: {{data.id}}</li>
-      <li>Title: {{data.title}}</li>
-      <li>Body: {{data.body}}</li>
+      <li>User ID: {{post.userId}}</li>
+      <li>Post ID: {{post.id}}</li>
+      <li>Title: {{post.title}}</li>
+      <li>Body: {{post.body}}</li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-  props: {
-    data: {
-      default: null
-    }
-  },
-  watch: {
-    data: function (val) {
-      if (val !== null) {
-        console.log(val)
-        this.$emit('showPopUp')
-      }
-    }
-  }
+  computed: mapGetters(['post', 'isVisiblePopUp'])
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <pop-up v-if="isPopUpVisible" @showPopUp="showPopUp" :data="postRequestInfo"/>
-    <form-add-post @getData="getData" class="form" />
+    <pop-up />
+    <form-add-post class="form" />
     <list-photos />
     <Observer @intersect="intersected" />
   </div>
@@ -15,12 +15,6 @@ import PopUp from './components/PopUp.vue'
 import Observer from './components/Observer.vue'
 export default {
   name: 'App',
-  data () {
-    return {
-      postRequestInfo: {},
-      isPopUpVisible: false
-    }
-  },
   computed: mapGetters(['dataPhotos']),
   updated () {
     this.$nextTick(() => {
@@ -35,17 +29,6 @@ export default {
   },
   methods: {
     ...mapActions(['fetchPhotos']),
-    getData (json) {
-      this.postRequestInfo = json
-      this.showPopUp()
-      setTimeout(this.closePopUp, 8000)
-    },
-    showPopUp () {
-      this.isPopUpVisible = true
-    },
-    closePopUp () {
-      this.isPopUpVisible = false
-    },
     intersected () {
       this.fetchPhotos(this.dataPhotos.pagePhotos)
     }
