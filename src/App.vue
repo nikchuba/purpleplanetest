@@ -2,15 +2,17 @@
   <div id="app">
     <pop-up v-if="isPopUpVisible" @showPopUp="showPopUp" :data="postRequestInfo"/>
     <form-add-post @getData="getData" class="form" />
-    <list-images />
+    <list-photos />
+    <Observer @intersect="intersected" />
   </div>
 </template>
 
 <script>
-import ListImages from './components/ListImages.vue'
-import FormAddPost from './components/FormAddPost.vue'
+import { mapActions, mapGetters } from 'vuex'
+import ListPhotos from './pages/ListPhotos.vue'
+import FormAddPost from './pages/FormAddPost.vue'
 import PopUp from './components/PopUp.vue'
-
+import Observer from './components/Observer.vue'
 export default {
   name: 'App',
   data () {
@@ -19,12 +21,20 @@ export default {
       isPopUpVisible: false
     }
   },
+  computed: mapGetters(['dataPhotos']),
+  updated () {
+    this.$nextTick(() => {
+      this.getState()
+    })
+  },
   components: {
-    ListImages,
+    ListPhotos,
     FormAddPost,
-    PopUp
+    PopUp,
+    Observer
   },
   methods: {
+    ...mapActions(['fetchPhotos']),
     getData (json) {
       this.postRequestInfo = json
       this.showPopUp()
@@ -35,6 +45,9 @@ export default {
     },
     closePopUp () {
       this.isPopUpVisible = false
+    },
+    intersected () {
+      this.fetchPhotos(this.dataPhotos.pagePhotos)
     }
   }
 }

@@ -1,52 +1,37 @@
 <template>
   <div class="list-images">
     <div
-      v-for="item in listImages"
-      :key="item.id"
+      v-for="photo in dataPhotos.photos"
+      :key="photo.id"
       class="card"
     >
       <img
         class="card-image"
-        :src="item.url"
-        :alt="`picture: ${item.id}`"
+        :src="photo.url"
+        :alt="`picture: ${photo.id}`"
         width="300"
         height="300"
       >
       <div class="card-body">
-        <span class="card-title">{{ item.title }}</span>
+        <span class="card-title">{{ photo.title }}</span>
       </div>
     </div>
-    <Observer @intersect="intersected" />
+
   </div>
 </template>
 
 <script>
-import Observer from './Observer.vue'
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
-  components: {
-    Observer
-  },
-  data () {
-    return {
-      page: 1,
-      listImages: []
-    }
-  },
+  computed: mapGetters(['dataPhotos']),
   mounted () {
     this.$nextTick(() => {
-      this.getPhotos()
+      this.fetchPhotos()
     })
   },
   methods: {
-    async getPhotos () {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/photos?_page=${this.page}&_limit=6`)
-      const listImages = await response.json()
-      this.listImages = [...this.listImages, ...listImages]
-    },
-    intersected () {
-      this.page++
-      this.getPhotos()
-    }
+    ...mapActions(['fetchPhotos'])
   }
 }
 </script>
@@ -57,7 +42,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  height: auto;
+  min-height: 70%;
   max-width: 620px;
   min-width: 320px;
 }

@@ -14,8 +14,10 @@ export default {
     observer: null
   }),
   mounted () {
-    this.createIntersectionObserver()
-    this.observer.observe(this.$el)
+    this.$nextTick(() => {
+      this.createIntersectionObserver()
+      this.observer.observe(this.$el)
+    })
   },
   destroyed () {
     this.observer.disconnect()
