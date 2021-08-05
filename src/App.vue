@@ -3,35 +3,22 @@
     <pop-up />
     <form-add-post class="form" />
     <list-photos />
-    <Observer @intersect="intersected" />
+    <Observer/>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
 import ListPhotos from './pages/ListPhotos.vue'
 import FormAddPost from './pages/FormAddPost.vue'
 import PopUp from './components/PopUp.vue'
 import Observer from './components/Observer.vue'
 export default {
   name: 'App',
-  computed: mapGetters(['dataPhotos']),
-  updated () {
-    this.$nextTick(() => {
-      this.getState()
-    })
-  },
   components: {
     ListPhotos,
     FormAddPost,
     PopUp,
     Observer
-  },
-  methods: {
-    ...mapActions(['fetchPhotos']),
-    intersected () {
-      this.fetchPhotos(this.dataPhotos.pagePhotos)
-    }
   }
 }
 </script>
@@ -44,7 +31,7 @@ export default {
   width: 750px;
   text-align: center;
   background-color: rgba(205, 156, 254, 0);
-  min-height: 100vh;
+  height: auto;
 }
 
 list-images{

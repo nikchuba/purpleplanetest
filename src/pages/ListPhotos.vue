@@ -13,7 +13,9 @@
         height="300"
       >
       <div class="card-body">
-        <span class="card-title">{{ photo.title }}</span>
+        <span class="card-title">
+          {{ photo.title }}
+        </span>
       </div>
     </div>
 
@@ -21,18 +23,10 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
-  computed: mapGetters(['dataPhotos']),
-  mounted () {
-    this.$nextTick(() => {
-      this.fetchPhotos()
-    })
-  },
-  methods: {
-    ...mapActions(['fetchPhotos'])
-  }
+  computed: mapGetters(['dataPhotos'])
 }
 </script>
 

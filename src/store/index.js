@@ -18,6 +18,10 @@ export default new Vuex.Store({
       setTimeout(() => {
         context.commit('changeVisiblePopUp', false)
       }, 8000)
+    },
+    createIntersectionObserver (context, props) {
+      const observer = new IntersectionObserver(props.callback, props.options)
+      context.commit('setObserver', observer)
     }
   },
   mutations: {
@@ -30,6 +34,9 @@ export default new Vuex.Store({
     },
     changeVisiblePopUp (state, bool) {
       state.isVisiblePopUp = bool
+    },
+    setObserver (state, observer) {
+      state.observer = observer
     }
   },
   state: {
@@ -38,7 +45,8 @@ export default new Vuex.Store({
       pagePhotos: 1
     },
     post: [],
-    isVisiblePopUp: false
+    isVisiblePopUp: false,
+    observer: null
   },
   getters: {
     dataPhotos (state) {
@@ -49,6 +57,9 @@ export default new Vuex.Store({
     },
     isVisiblePopUp (state) {
       return state.isVisiblePopUp
+    },
+    observer (state) {
+      return state.observer
     }
   }
 })

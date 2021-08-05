@@ -3,19 +3,19 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  props: {
-    options: {
-      type: Object,
-      default: null
-    }
-  },
-  data: () => ({
-    observer: null
-  }),
+  computed: mapGetters(['dataPhotos', 'observer']),
   mounted () {
     this.$nextTick(() => {
-      this.createIntersectionObserver()
+      this.createIntersectionObserver({
+        callback: ([entry]) => {
+          if (entry && entry.isIntersecting) {
+            this.fetchPhotos(this.dataPhotos.pagePhotos)
+          }
+        },
+        options: {}
+      })
       this.observer.observe(this.$el)
     })
   },
@@ -23,14 +23,7 @@ export default {
     this.observer.disconnect()
   },
   methods: {
-    createIntersectionObserver () {
-      const options = this.options || {}
-      this.observer = new IntersectionObserver(([entry]) => {
-        if (entry && entry.isIntersecting) {
-          this.$emit('intersect')
-        }
-      }, options)
-    }
+    ...mapActions(['fetchPhotos', 'createIntersectionObserverst'])
   }
 }
 </script>
