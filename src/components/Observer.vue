@@ -20,9 +20,7 @@ export default {
   destroyed () {
     this.observer.disconnect()
   },
-  methods: {
-    ...mapActions(['fetchPhotos', 'createIntersectionObserver'])
-  }
+  methods: mapActions(['fetchPhotos', 'createIntersectionObserver'])
 }
 </script>
 
