@@ -80,7 +80,7 @@ export default {
     min-width: 300px;
     height: 250px;
     background-color: #fff;
-    border-radius: 0 0 20px 20px;
+    border-radius: 20px;
     margin: 0 auto;
     padding-top: 20px;
   }
@@ -99,17 +99,18 @@ export default {
     outline: none !important;
   }
   .form-body::-webkit-input-placeholder {
-    color: #A72AE2;
+    color: rgba(166, 0, 244, .6);
   }
   .form-title::-webkit-input-placeholder{
-    color: #A72AE2;
+    color: rgba(166, 0, 244, .6);
   }
   .form-title::-moz-placeholder{
-    color: #A72AE2;
+    color: rgba(166, 0, 244, .6);
   }
   .form-body::-moz-placeholder{
-    color: #A72AE2;
+    color: rgba(166, 0, 244, .6);
   }
+
   .form-btn{
     width: 100%;
     height: 60px;
@@ -117,11 +118,11 @@ export default {
     border-radius: 0 0 20px 20px;
     border: none;
     color: #fff;
-    background-color: rgba(166, 0, 244, 0.8);
+    background-color: rgba(166, 0, 244, 1);
     transition: all .3s ease;
   }
   .form-btn:active{
-    background-color: rgba(166, 0, 244, 0.4);
+    background-color: rgba(166, 0, 244, .6);
     transition: all .1s ease;
   }
 </style>
