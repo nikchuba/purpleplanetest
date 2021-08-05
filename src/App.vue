@@ -3,7 +3,6 @@
     <pop-up />
     <form-add-post class="form" />
     <list-photos />
-    <Observer/>
   </div>
 </template>
 
@@ -11,14 +10,12 @@
 import ListPhotos from './pages/ListPhotos.vue'
 import FormAddPost from './pages/FormAddPost.vue'
 import PopUp from './components/PopUp.vue'
-import Observer from './components/Observer.vue'
 export default {
   name: 'App',
   components: {
     ListPhotos,
     FormAddPost,
-    PopUp,
-    Observer
+    PopUp
   }
 }
 </script>

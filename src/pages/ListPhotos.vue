@@ -1,12 +1,12 @@
 <template>
-  <div class="list-images">
+  <div class="list-photos">
     <div
       v-for="photo in dataPhotos.photos"
       :key="photo.id"
       class="card"
     >
       <img
-        class="card-image"
+        class="card-photo"
         :src="photo.url"
         :alt="`picture: ${photo.id}`"
         width="300"
@@ -18,20 +18,24 @@
         </span>
       </div>
     </div>
-
+    <Observer />
   </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import Observer from '../components/Observer.vue'
 
 export default {
-  computed: mapGetters(['dataPhotos'])
+  computed: mapGetters(['dataPhotos']),
+  components: {
+    Observer
+  }
 }
 </script>
 
 <style lang="css" scoped>
-  .list-images{
+  .list-photos{
   margin: 20px auto 0 auto;
   display: flex;
   flex-wrap: wrap;
@@ -48,7 +52,7 @@ export default {
   margin-right: auto;
   position: relative;
 }
-.card-image{
+.card-photo{
   border-radius: 20px;
 }
 .card-body{

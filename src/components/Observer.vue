@@ -7,23 +7,21 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   computed: mapGetters(['dataPhotos', 'observer']),
   mounted () {
-    this.$nextTick(() => {
-      this.createIntersectionObserver({
-        callback: ([entry]) => {
-          if (entry && entry.isIntersecting) {
-            this.fetchPhotos(this.dataPhotos.pagePhotos)
-          }
-        },
-        options: {}
-      })
-      this.observer.observe(this.$el)
+    this.createIntersectionObserver({
+      callback: ([entry]) => {
+        if (entry && entry.isIntersecting) {
+          this.fetchPhotos(this.dataPhotos.pagePhotos)
+        }
+      },
+      options: {}
     })
+    this.observer.observe(this.$el)
   },
   destroyed () {
     this.observer.disconnect()
   },
   methods: {
-    ...mapActions(['fetchPhotos', 'createIntersectionObserverst'])
+    ...mapActions(['fetchPhotos', 'createIntersectionObserver'])
   }
 }
 </script>
